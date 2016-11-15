@@ -1,0 +1,9 @@
+#input{
+    width:100%;
+    min-height: 200px;
+}
+
+#gen{
+    display: block;
+    margin-right: 15%;
+}
