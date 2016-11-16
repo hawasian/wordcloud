@@ -12,7 +12,7 @@ function wordcloud(inputLoc, wcOutputLoc) {
     var input = read(inputLoc);
     input = gather(input);
     console.log(input);
-    write(input,wcOutputLoc);
+    write(input, wcOutputLoc);
     //$(wcOutputLoc).html(input[0]["what"]);
 }
 
@@ -47,7 +47,7 @@ function gather(str) { // converts a string to an data array for placement
     return measure(output, max);
 }
 
-function measure(inArray, maxVal) { //calculates the font-size, and the height, width, and orientaion of words
+function measure(inArray, maxVal) { //calculates the font-size, and the height, and width of words
     var outArray = [];
     for (word in inArray) {
         var row = [];
@@ -57,21 +57,12 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         row['font-size'] = size.toFixed(3).toString() + "em";
         row['x'] = 0;
         row['y'] = 0;
-        var flipper = Math.random();
-        var orientation = flipper <= .85 ? "horz" : "vert";
-        var data = "<span class='"+orientation+"' id='word'style='font-size:" + row['font-size'] + "'>" + word + "</span>";
+
+        var data = "<span id='word'style='font-size:" + row['font-size'] + "'>" + word + "</span>";
         $('#workArea').html(data);
-        
-        if (flipper <= .85) {
             row['width'] = $('#word').outerWidth();
             row['height'] = $('#word').outerHeight();
-            row['orientation'] = 'horz';
-        }
-        else {
-            row['height'] = $('#word').outerWidth();
-            row['width'] = $('#word').outerHeight();
-            row['orientation'] = 'vert';
-        }
+
 
         outArray.push(row);
     }
@@ -79,15 +70,17 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
     return outArray;
 }
 
-function write(inArray, loc){
+function write(inArray, loc) {
     var markup = "";
-    for(var i =0; i < inArray.length; i++){
+    for (var i = 0; i < inArray.length; i++) {
         var wordObj = inArray[i];
         var line = "";
-        line += "<span class='cloudWord "+wordObj['orientation']+"' id='cloud_"+wordObj['word']+"' style ='";
-        line += "font-size:"+wordObj["font-size"];
-        line += "'>"+wordObj['word']+"</span>";
-        
+        line += "<span class='cloudWord' id='cloud_" + wordObj['word'] + "' style ='";
+        line += "font-size:" + wordObj["font-size"] + "; ";
+        line += "width:" + wordObj['width'] + "px; "
+        line += "height:" + wordObj['height'] + "px;"
+        line += "'>" + wordObj['word'] + "</span>";
+
         markup += line;
     }
     $(loc).html(markup);

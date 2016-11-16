@@ -20,12 +20,7 @@
 }
 
 /*CSS Ouput*/
-.vert{
-    -ms-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-}
-
 .cloudWord{
     display: inline-block;
+    padding: 2px;
 }
