@@ -1,5 +1,5 @@
 //Global Variables
-var minSize = 1; //em
+var minSize = .5; //em
 var maxSize = 3; //em
 
 $(document).ready(function() {
@@ -12,6 +12,7 @@ function wordcloud(inputLoc, wcOutputLoc) {
     var input = read(inputLoc);
     input = gather(input);
     console.log(input);
+    write(input,wcOutputLoc);
     //$(wcOutputLoc).html(input[0]["what"]);
 }
 
@@ -57,8 +58,8 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         row['x'] = 0;
         row['y'] = 0;
         var flipper = Math.random();
-        var orientaion = flipper <= .85 ? "horz" : "vert";
-        var data = "<span class='"+orientaion+"' id='word'style='font-size:" + row['font-size'] + "'>" + word + "</span>";
+        var orientation = flipper <= .85 ? "horz" : "vert";
+        var data = "<span class='"+orientation+"' id='word'style='font-size:" + row['font-size'] + "'>" + word + "</span>";
         $('#workArea').html(data);
         
         if (flipper <= .85) {
@@ -76,4 +77,18 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
     }
     $('#workArea').html("").hide();
     return outArray;
+}
+
+function write(inArray, loc){
+    var markup = "";
+    for(var i =0; i < inArray.length; i++){
+        var wordObj = inArray[i];
+        var line = "";
+        line += "<span class='cloudWord "+wordObj['orientation']+"' id='cloud_"+wordObj['word']+"' style ='";
+        line += "font-size:"+wordObj["font-size"];
+        line += "'>"+wordObj['word']+"</span>";
+        
+        markup += line;
+    }
+    $(loc).html(markup);
 }
