@@ -7,3 +7,9 @@
     display: block;
     margin-right: 15%;
 }
+
+#workArea{
+    display: block;
+    position: absolute;
+    top: -999px;
+}
