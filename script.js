@@ -1,6 +1,6 @@
 //Global Variables
-var minSize = 12; //em
-var maxSize = 50; //em
+var minSize = .5; //em
+var maxSize = 3; //em
 
 $(document).ready(function() {
     $('#gen').click(function() {
@@ -57,7 +57,7 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         row['word'] = word;
         row['freq'] = inArray[word];
         var size = ((inArray[word] - 1) / (maxVal - 1) * (maxSize - minSize)) + minSize;
-        row['font-size'] = size.toFixed(3).toString() + "px";
+        row['font-size'] = size.toFixed(3).toString() + "em";
         row['x'] = 0;
         row['y'] = 0;
 
@@ -82,6 +82,17 @@ function position(inArray, wcCont){
         var word = inArray[i];
         word["x"] = xOrigin - (word["width"]/2);
         word["y"] = yOrigin - (word["height"]/2);
+        var dir = Math.floor(Math.random() * 2);
+        var y;
+        switch(dir){
+            case 0:
+               y = 1; 
+            break;
+                
+            case 1:
+               y = -1; 
+            break;
+        }
         for(var j = 0; j < i; j++){
             var TO = 100;
             while(overlap(word, inArray[j], TO)){
@@ -102,17 +113,22 @@ function overlap(ind1, ind2, maxTimeout){
     var fudge = 0;
     
     var top1 = ind1["y"];
+    var lft1 = ind1["x"];
     var bot1 = ind1["y"] + ind1["height"];
+    var rgt1 = ind1["x"] + ind1["width"];
     
     var top2 = ind2["y"] - fudge;
+    var lft2 = ind2["x"] - fudge;
     var bot2 = ind2["y"] + ind2["height"] + fudge;
+    var rgt2 = ind2["x"] + ind2["width"] + fudge;
     if(maxTimeout <= 0){
-        console.log(ind1["word"]+" vs"+ind2["word"]+": TIMEOUT")
         return false;
-    }else if(bot1 > top2 && top1 < bot2){
-        return true;
+    }else if(!(bot1 > top2 && top1 < bot2)){
+        return false;
+    }else if(!(rgt1 > lft2 && lft1 < rgt2)){
+        return false;
     }else{
-        return false;
+        return true;
     }
 }
 
@@ -128,7 +144,7 @@ function write(inArray, loc) {
         line += "line-height:"+wordObj["height"]+"px;";
         line += "top:" + wordObj["y"] + "; ";
         line += "left:" + wordObj["x"] + "; ";
-        line += "'>" + wordObj['word'] + "</span>";
+        line += "'>" + wordObj['word'] + "</span> \n";
 
         markup += line;
     }
