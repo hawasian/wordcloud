@@ -82,22 +82,25 @@ function position(inArray, wcCont){
         var word = inArray[i];
         word["x"] = xOrigin - (word["width"]/2);
         word["y"] = yOrigin - (word["height"]/2);
-        var dir = Math.floor(Math.random() * 2);
-        var y;
-        switch(dir){
-            case 0:
-               y = 1; 
-            break;
-                
-            case 1:
-               y = -1; 
-            break;
+        var dir = Math.floor(Math.random() * 8);
+        var y = 0;
+        var x = 0;
+        if(dir >= 5){
+            y = -1;
+        }else if(dir <= 2){
+            y = 1;
+        }
+        if(dir == 0 || dir == 7){
+            x = 0;
+        }else if(dir%2 == 0){
+            x = 1;
+        }else{
+            x = -1;
         }
         for(var j = 0; j < i; j++){
-            var TO = 100;
-            while(overlap(word, inArray[j], TO)){
-                TO --; 
-                word["y"] -= 1;
+            while(overlap(word, inArray[j])){
+                word["y"] -= y;
+                word["x"] -= x;
             }
         }
     }
@@ -109,7 +112,7 @@ function position(inArray, wcCont){
     return inArray;
 }
 
-function overlap(ind1, ind2, maxTimeout){
+function overlap(ind1, ind2){
     var fudge = 0;
     
     var top1 = ind1["y"];
@@ -121,11 +124,8 @@ function overlap(ind1, ind2, maxTimeout){
     var lft2 = ind2["x"] - fudge;
     var bot2 = ind2["y"] + ind2["height"] + fudge;
     var rgt2 = ind2["x"] + ind2["width"] + fudge;
-    if(maxTimeout <= 0){
-        return false;
-    }else if(!(bot1 > top2 && top1 < bot2)){
-        return false;
-    }else if(!(rgt1 > lft2 && lft1 < rgt2)){
+    
+    if(bot1 < top2 || top1 > bot2 || rgt1 < lft2 || lft1 > rgt2){
         return false;
     }else{
         return true;
