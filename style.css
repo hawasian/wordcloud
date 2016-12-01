@@ -20,7 +20,15 @@
 }
 
 /*CSS Ouput*/
+#wordcloud{
+    position: relative;
+    width: 700px;
+    height: 400px;
+    background-color: grey;
+}
+
 .cloudWord{
     display: inline-block;
-    padding: 2px;
+    padding: 0;
+    position: absolute;
 }
