@@ -13,17 +13,17 @@ $(document).ready(function() {
     $('#gen').click(function() {
         $('#wordcloud').html("");
         wordcloud('#input', '#wordcloud');
-        writeHTML('#wordcloud','#html-markup');
+        writeHTML('#wordcloud', '#html-markup');
     });
 });
 
-function writeHTML(inputLoc, outputLoc){
-    var markup  = $(inputLoc).html().toString();
+function writeHTML(inputLoc, outputLoc) {
+    var markup = $(inputLoc).html().toString();
     markup = markup.replace(/[<]/g, "&lt;");
     markup = markup.replace(/[>]\s/g, "&gt;<br />");
-    markup = "&lt;div id='wordcloud'&gt;<br />"+markup+"&lt;/div&gt;"
+    markup = "&lt;div id='wordcloud'&gt;<br />" + markup + "&lt;/div&gt;"
     $(outputLoc).html(markup);
-    
+
 }
 
 function wordcloud(inputLoc, wcOutputLoc) {
@@ -97,7 +97,7 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
 function position(inArray, wcCont) {
     xOrigin = $(wcCont).width() / 2;
     yOrigin = $(wcCont).height() / 2;
-    inArray = shuffle(inArray);
+    inArray = insSort(inArray);
     inArray[0]["x"] = xOrigin - (inArray[0]["width"] / 2);
     inArray[0]["y"] = yOrigin - (inArray[0]["height"] / 2);
     var word;
@@ -125,14 +125,15 @@ function position(inArray, wcCont) {
     return inArray;
 }
 
-function randDir(){
+function randDir() {
     var output = [];
-    var dir = Math.floor(Math.random()*360);
+    var dir = Math.floor(Math.random() * 360);
     dir = dir * (Math.PI / 180);
     output["x"] = Math.cos(dir);
     output["y"] = Math.sin(dir);
     return output;
 }
+
 function overlap(ind1, ind2) {
     var fudge = 1;
 
@@ -179,6 +180,25 @@ function shuffle(array) {
         var temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+    }
+    return array;
+}
+
+function sortD(array) {
+
+}
+
+function insSort(array) { //Sort As.
+    for (var i = 1; i < array.length; i++) {
+        for (var j = i; j > 0; j--) {
+            if (array[j]['freq'] < array[j-1]['freq']) {
+                var temp = array[j];
+                array[j] = array[j - 1];
+                array[j - 1] = temp;
+            }else{
+                break;
+            }
+        }
     }
     return array;
 }
