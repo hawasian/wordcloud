@@ -13,8 +13,18 @@ $(document).ready(function() {
     $('#gen').click(function() {
         $('#wordcloud').html("");
         wordcloud('#input', '#wordcloud');
+        writeHTML('#wordcloud','#html-markup');
     });
 });
+
+function writeHTML(inputLoc, outputLoc){
+    var markup  = $(inputLoc).html().toString();
+    markup = markup.replace(/[<]/g, "&lt;");
+    markup = markup.replace(/[>]\s/g, "&gt;<br />");
+    markup = "&lt;div id='wordcloud'&gt;<br />"+markup+"&lt;/div&gt;"
+    $(outputLoc).html(markup);
+    
+}
 
 function wordcloud(inputLoc, wcOutputLoc) {
     var input = null;
@@ -98,15 +108,18 @@ function position(inArray, wcCont) {
         word["y"] = yOrigin - (word["height"] / 2);
         dir = randDir();
         for (var j = 0; j < i; j++) {
+            var ol = false;
             while (overlap(word, inArray[j])) {
+                ol = true;
                 word["y"] += dir["y"];
                 word["x"] += dir["x"];
             }
+            j = ol ? 0 : j;
         }
     }
     for (var i = 0; i < inArray.length; i++) {
-        inArray[i]["x"] = inArray[i]["x"] + "px";
-        inArray[i]["y"] = inArray[i]["y"] + "px";
+        inArray[i]["x"] = Math.round(inArray[i]["x"]) + "px";
+        inArray[i]["y"] = Math.round(inArray[i]["y"]) + "px";
     }
 
     return inArray;
@@ -147,7 +160,7 @@ function write(inArray, loc) {
     for (var i = 0; i < inArray.length; i++) {
         var wordObj = inArray[i];
         var line = "";
-        line += "<span class='cloudWord' id='cloud_" + wordObj['word'] + "' style ='";
+        line += "<span class='cW' id='c_" + wordObj['word'].toLowerCase() + "' style ='";
         line += "font-size:" + wordObj["font-size"] + "; ";
         line += "height:" + wordObj["height"] + "px;";
         line += "line-height:" + wordObj["height"] + "px;";
