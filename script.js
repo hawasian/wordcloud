@@ -113,23 +113,11 @@ function position(inArray, wcCont) {
 }
 
 function randDir(){
-    var x = 0;
-    var y = 0;
     var output = [];
-    var dir = Math.floor(Math.random()*4);
-    if(dir >= 2){
-        x = 1;
-    }else{
-        x = -1;
-    }
-    
-    if(dir % 2 == 0){
-        y = 1;
-    }else{
-        y = -1;
-    }
-    output["x"] = x;
-    output["y"] = y;
+    var dir = Math.floor(Math.random()*360);
+    dir = dir * (Math.PI / 180);
+    output["x"] = Math.cos(dir);
+    output["y"] = Math.sin(dir);
     return output;
 }
 function overlap(ind1, ind2) {
