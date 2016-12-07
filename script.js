@@ -1,6 +1,7 @@
 //Global Variables
 var minSize = .5; //em
 var maxSize = 3; //em
+var fType = 'em';
 
 var maxH = 0;
 var maxW = 0;
@@ -28,6 +29,9 @@ function writeHTML(inputLoc, outputLoc) {
 
 function wordcloud(inputLoc, wcOutputLoc) {
     var input = null;
+    minSize = parseFloat($('#fMin').val());
+    maxSize = parseFloat($('#fMax').val());
+    fType = $('#fType').val();
     input = read(inputLoc);
     input = gather(input);
     input = position(input, wcOutputLoc);
@@ -74,7 +78,7 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         row['word'] = word;
         row['freq'] = inArray[word];
         var size = ((inArray[word] - 1) / (maxVal - 1) * (maxSize - minSize)) + minSize;
-        row['font-size'] = size.toFixed(3).toString() + "em";
+        row['font-size'] = size.toFixed(3).toString() + fType;
         row['x'] = 0;
         row['y'] = 0;
 
@@ -182,10 +186,6 @@ function shuffle(array) {
         array[j] = temp;
     }
     return array;
-}
-
-function sortD(array) {
-
 }
 
 function insSort(array) { //Sort As.

@@ -36,7 +36,9 @@
     /* Likely future */
 }
 
-
+#fMin, #fMax{
+    width: 80%;
+}
 /*CSS Ouput*/
 
 #wordcloud {
