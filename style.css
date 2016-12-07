@@ -39,6 +39,11 @@
 #fMin, #fMax{
     width: 80%;
 }
+
+#blacklist{
+    width: 100%;
+    min-height: 80px;
+}
 /*CSS Ouput*/
 
 #wordcloud {

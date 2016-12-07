@@ -39,6 +39,7 @@ function wordcloud(inputLoc, wcOutputLoc) {
     //$(wcOutputLoc).html(input[0]["what"]);
 }
 
+
 function read(loc) {
     var input = $(loc).val();
     var output = lint(input);
@@ -47,16 +48,28 @@ function read(loc) {
 
 function lint(str) { // makes a string of the same case, and removes punctuation and double spaces (except from the commas between numbers)
     var input = str.toUpperCase();
-    var output = input.replace(/[.\/@#!?<>\[\]$%\^&\*;:{}=\-_`~()]|,\s/g, " ");
+    var output = input.replace(/[.\/@#!?<>\[\]$%\^&\*;:{}=\-_`~()\t\n\r]|,\s/g, " ");
     output = output.replace(/\s\s+/g, ' ');
     return output;
 }
 
 function gather(str) { // converts a string to an data array for placement
+    var blist = read("#blacklist");
+    blist = blist.split(" ");
+    console.log(blist);
     var input = str.split(" ");
     var max = 0;
     var output = [];
     for (var i = 0; i < input.length; i++) {
+        var listed = false;
+        for(var j = 0; j < blist.length; j++){
+            if(input[i] == blist[j]){
+                listed = true;
+            }
+        }
+        if(listed){
+            continue;
+        }
         if (output[input[i]] >= 1) {
             output[input[i]]++;
             if (output[input[i]] > max) {
