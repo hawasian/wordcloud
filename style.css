@@ -66,3 +66,11 @@
     padding: 0;
     position: absolute;
 }
+
+.bold{
+    font-weight: bold;
+}
+
+.italic{
+    font-style: italic;
+}

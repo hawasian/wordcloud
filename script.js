@@ -34,6 +34,7 @@ function wordcloud(inputLoc, wcOutputLoc) {
     numWords = isFloat($('#numWords').val()) ? parseInt($('#numWords').val()) : 0;
     fType = $('#fType').val();
     fIt = parseInt($('#fItal').val());
+    fBd = parseInt($('#fWeight').val());
     input = read(inputLoc);
     if(!input){
         return false; // No input
@@ -101,12 +102,15 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
             break;
         }
         index++;
-        var it = Math.ceil(Math.random()*100) <= $('#fItal').val();
+        
         var row = [];
         row['word'] = word;
         row['freq'] = inArray[word];
         var size = ((inArray[word] - 1) / (maxVal - 1) * (maxSize - minSize)) + minSize;
         row['font-size'] = size.toFixed(3).toString() + fType;
+        row['italic'] = Math.ceil(Math.random()*100) <= fIt ? 'italic' : '';
+        row['bold'] = Math.ceil(Math.random()*100) <= fBd ? 'bold' : '';
+        
         row['x'] = 0;
         row['y'] = 0;
 
@@ -116,7 +120,6 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         row['height'] = $('#word').outerHeight();
         maxW += row['width'];
         maxH += row['height'];
-
 
         outArray.push(row);
     }
@@ -129,6 +132,7 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
 function position(inArray, wcCont) {
     xOrigin = $(wcCont).width() / 2;
     yOrigin = $(wcCont).height() / 2;
+    inArray = shuffle(inArray);
     inArray[0]["x"] = xOrigin - (inArray[0]["width"] / 2);
     inArray[0]["y"] = yOrigin - (inArray[0]["height"] / 2);
     var word;
@@ -192,7 +196,7 @@ function write(inArray, loc) {
     for (var i = 0; i < inArray.length; i++) {
         var wordObj = inArray[i];
         var line = "";
-        line += "<span class='cW' id='c_" + wordObj['word'].toLowerCase() + "' style ='";
+        line += "<span class='cW "+wordObj["italic"]+" "+wordObj["bold"]+"' id='c_" + wordObj['word'].toLowerCase() + "' style ='";
         line += "font-size:" + wordObj["font-size"] + "; ";
         line += "height:" + wordObj["height"] + "px;";
         line += "line-height:" + wordObj["height"] + "px;";
