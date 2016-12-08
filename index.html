@@ -6,8 +6,10 @@
 	<title>WordCloud</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css?v=2" type="text/css" />
+
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-	<link rel="stylesheet" href="style.css" type="text/css" />
+
 
 </head>
 
@@ -25,35 +27,81 @@
 	<div class="container" id="content">
 		<div class="row" id="input-div">
 			<div class="col col-sm-12">
-				<h3>Text Input</h3>
+				<h3>Text Input:</h3>
 				<textarea id="input"></textarea>
 			</div>
 			<div class="col col-sm-4">
-				<h4>Font Size:</h4>
+				<h4>Font:</h4>
 				<div class="row">
-					<div class="col col-sm-4">
-						Minimum
+					<div class="col col-xs-4">
+						Size Minimum:
 					</div>
-					<div class="col col-sm-4">
-						Maximum
+					<div class="col col-xs-4">
+						Maximum:
 					</div>
-					<div class="col col-sm-4">
-						Type
+					<div class="col col-xs-4">
+						Type:
 					</div>
 				</div>
 				<div class="row">
-					<div class="col col-sm-4">
-						<input type="text" id="fMin" name="fMin" />
+					<div class="col col-xs-4">
+						<input type="text" id="fMin" name="fMin" placeholder=".5" />
 					</div>
-					<div class="col col-sm-4">
-						<input type="text" id="fMax" name="fMax" />
+					<div class="col col-xs-4">
+						<input type="text" id="fMax" name="fMax" placeholder="3" />
 					</div>
-					<div class="col col-sm-4">
+					<div class="col col-xs-4">
 						<select id="fType" name="fType">
 							<option value="em">em</option>
 							<option value="px">px</option>
 							<option value="pt">pt</option>
 						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-sm-4">
+						Font Style:
+					</div>
+					<div class="col col-sm-8">
+						<select id="fStyle" name="fStyle">
+							<option value="em">Font 1</option>
+							<option value="px">Font 2</option>
+							<option value="pt">Font 3</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-sm-6">
+						<div class="row">
+							<div class="col col-sm-4">
+								Bold:
+							</div>
+							<div class="col col-sm-8">
+								<select id="fWeight" name="fWeight">
+									<option value="0">None</option>
+									<option value="25">Some</option>
+									<option value="50">Half</option>
+									<option value="75">Most</option>
+									<option value="100">All</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col col-sm-6">
+						<div class="row">
+							<div class="col col-sm-4">
+								Itallic:
+							</div>
+							<div class="col col-sm-8">
+								<select id="fItal" name="fItal">
+									<option value="0">None</option>
+									<option value="25">Some</option>
+									<option value="50">Half</option>
+									<option value="75">Most</option>
+									<option value="100">All</option>
+								</select>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -105,7 +153,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="script.js?v=3"></script>
 </body>
 
 </html>

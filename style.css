@@ -39,6 +39,10 @@
 #fMin, #fMax{
     width: 80%;
 }
+ #fStyle{
+    width: 90%;
+
+}
 
 #blacklist{
     width: 100%;
@@ -50,7 +54,7 @@
     position: relative;
     width: 700px;
     height: 400px;
-    background-color: grey;
+    /*background-color: red;*/
 }
 
 .cW {
