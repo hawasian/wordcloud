@@ -58,8 +58,10 @@
     position: relative;
     width: 700px;
     height: 400px;
+    
     /*background-color: red;*/
 }
+
 
 .cW {
     display: inline-block;

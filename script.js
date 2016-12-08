@@ -191,6 +191,7 @@ function overlap(ind1, ind2) {
 }
 
 function write(inArray, loc) {
+    var font = $('#fStyle').val();
     $(loc).html("");
     var markup = "";
     for (var i = 0; i < inArray.length; i++) {
@@ -202,12 +203,15 @@ function write(inArray, loc) {
         line += "line-height:" + wordObj["height"] + "px;";
         line += "top:" + wordObj["y"] + "; ";
         line += "left:" + wordObj["x"] + "; ";
+        line += "font-family: "+font+"; ";
         line += "'>" + wordObj['word'] + "</span> \n";
 
         markup += line;
     }
     $(loc).html(markup);
 }
+
+
 
 function shuffle(array) {
     for (var i = array.length - 1; i > 0; i--) {
