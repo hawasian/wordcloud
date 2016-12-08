@@ -5,7 +5,7 @@ var fType = 'em';
 var fIt;
 var maxH = 0;
 var maxW = 0;
-
+var numWords = 0;
 var xOrigin;
 var yOrigin;
 
@@ -31,6 +31,7 @@ function wordcloud(inputLoc, wcOutputLoc) {
     var input = null;
     minSize = isFloat($('#fMin').val()) ? parseFloat($('#fMin').val()) : 1;
     maxSize = isFloat($('#fMax').val()) ? parseFloat($('#fMax').val()) : 3*minSize;
+    numWords = isFloat($('#numWords').val()) ? parseInt($('#numWords').val()) : 0;
     fType = $('#fType').val();
     fIt = parseInt($('#fItal').val());
     input = read(inputLoc);
@@ -63,7 +64,7 @@ function lint(str) { // makes a string of the same case, and removes punctuation
 
 function gather(str) { // converts a string to an data array for placement
     var blist = read("#blacklist");
-    blist = blist.split(" ");
+    blist = !blist ? "" : blist.split(" ");
     var input = str.split(" ");
     var max = 0;
     var output = [];
@@ -92,8 +93,14 @@ function gather(str) { // converts a string to an data array for placement
 
 function measure(inArray, maxVal) { //calculates the font-size, and the height, and width of words
     $('#workArea').html("").show();
+    inArray = insSort(inArray);
+    var index = 0;
     var outArray = [];
     for (word in inArray) {
+        if(index >= numWords && numWords !== 0){
+            break;
+        }
+        index++;
         var it = Math.ceil(Math.random()*100) <= $('#fItal').val();
         var row = [];
         row['word'] = word;
@@ -122,7 +129,6 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
 function position(inArray, wcCont) {
     xOrigin = $(wcCont).width() / 2;
     yOrigin = $(wcCont).height() / 2;
-    inArray = insSort(inArray);
     inArray[0]["x"] = xOrigin - (inArray[0]["width"] / 2);
     inArray[0]["y"] = yOrigin - (inArray[0]["height"] / 2);
     var word;

@@ -41,7 +41,11 @@
 }
  #fStyle{
     width: 90%;
+}
 
+#numWords{
+    display: inline-block;
+    width: 50px;
 }
 
 #blacklist{
