@@ -30,26 +30,24 @@ function writeHTML(inputLoc, outputLoc) {
 function wordcloud(inputLoc, wcOutputLoc) {
     var input = null;
     minSize = isFloat($('#fMin').val()) ? parseFloat($('#fMin').val()) : 1;
-    maxSize = isFloat($('#fMax').val()) ? parseFloat($('#fMax').val()) : 3*minSize;
+    maxSize = isFloat($('#fMax').val()) ? parseFloat($('#fMax').val()) : 3 * minSize;
     numWords = isFloat($('#numWords').val()) ? parseInt($('#numWords').val()) : 0;
     fType = $('#fType').val();
     fIt = parseInt($('#fItal').val());
     fBd = parseInt($('#fWeight').val());
     input = read(inputLoc);
-    if(!input){
+    if (!input) {
         return false; // No input
     }
     input = gather(input);
     input = position(input, wcOutputLoc);
     write(input, wcOutputLoc);
-    console.log("Ital:"+fIt);
-
 }
 
 
 function read(loc) {
     var input = $(loc).val();
-    if(input == ''){
+    if (input == '') {
         return false;
     }
     var output = lint(input);
@@ -71,22 +69,22 @@ function gather(str) { // converts a string to an data array for placement
     var output = [];
     for (var i = 0; i < input.length; i++) {
         var listed = false;
-        for(var j = 0; j < blist.length; j++){
-            if(input[i] == blist[j]){
+        for (var j = 0; j < blist.length; j++) {
+            if (input[i].toString() == blist[j].toString()) {
                 listed = true;
             }
         }
-        if(listed){
+        if (listed) {
             continue;
         }
-        if (output[input[i]] >= 1) {
-            output[input[i]]++;
-            if (output[input[i]] > max) {
-                max = output[input[i]];
+        if (output[input[i].toString()] >= 1) {
+            output[input[i].toString()]++;
+            if (output[input[i].toString()] > max) {
+                max = output[input[i].toString()];
             }
         }
         else {
-            output[input[i]] = 1;
+            output[input[i].toString()] = 1;
         }
     }
     return measure(output, max);
@@ -94,23 +92,17 @@ function gather(str) { // converts a string to an data array for placement
 
 function measure(inArray, maxVal) { //calculates the font-size, and the height, and width of words
     $('#workArea').html("").show();
-    inArray = insSort(inArray);
-    var index = 0;
     var outArray = [];
     for (word in inArray) {
-        if(index >= numWords && numWords !== 0){
-            break;
-        }
-        index++;
-        
         var row = [];
         row['word'] = word;
+        //alert(inArray[word]);
         row['freq'] = inArray[word];
         var size = ((inArray[word] - 1) / (maxVal - 1) * (maxSize - minSize)) + minSize;
         row['font-size'] = size.toFixed(3).toString() + fType;
-        row['italic'] = Math.ceil(Math.random()*100) <= fIt ? 'italic' : '';
-        row['bold'] = Math.ceil(Math.random()*100) <= fBd ? 'bold' : '';
-        
+        row['italic'] = Math.ceil(Math.random() * 100) <= fIt ? 'italic' : '';
+        row['bold'] = Math.ceil(Math.random() * 100) <= fBd ? 'bold' : '';
+
         row['x'] = 0;
         row['y'] = 0;
 
@@ -124,6 +116,7 @@ function measure(inArray, maxVal) { //calculates the font-size, and the height, 
         outArray.push(row);
     }
     $('#workArea').html("").hide();
+
     maxW = maxW / 3;
     maxH = maxH / 3;
     return outArray;
@@ -197,13 +190,13 @@ function write(inArray, loc) {
     for (var i = 0; i < inArray.length; i++) {
         var wordObj = inArray[i];
         var line = "";
-        line += "<span class='cW "+wordObj["italic"]+" "+wordObj["bold"]+"' id='c_" + wordObj['word'].toLowerCase() + "' style ='";
+        line += "<span class='cW " + wordObj["italic"] + " " + wordObj["bold"] + "' id='c_" + wordObj['word'].toLowerCase() + "' style ='";
         line += "font-size:" + wordObj["font-size"] + "; ";
         line += "height:" + wordObj["height"] + "px;";
         line += "line-height:" + wordObj["height"] + "px;";
         line += "top:" + wordObj["y"] + "; ";
         line += "left:" + wordObj["x"] + "; ";
-        line += "font-family: "+font+"; ";
+        line += "font-family: " + font + "; ";
         line += "'>" + wordObj['word'] + "</span> \n";
 
         markup += line;
@@ -223,21 +216,6 @@ function shuffle(array) {
     return array;
 }
 
-function insSort(array) { //Sort As.
-    for (var i = 1; i < array.length; i++) {
-        for (var j = i; j > 0; j--) {
-            if (array[j]['freq'] < array[j-1]['freq']) {
-                var temp = array[j];
-                array[j] = array[j - 1];
-                array[j - 1] = temp;
-            }else{
-                break;
-            }
-        }
-    }
-    return array;
-}
-
-function isFloat(n){
+function isFloat(n) {
     return !isNaN(parseFloat(n));
 }
